@@ -4,24 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
   <title>Вопросы</title>
-  <meta name="theme-color" content="#f4efe8" />
+  <meta name="theme-color" content="#f7efe9" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Вопросы" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
     :root {
-      --bg: #f5efe7;
-      --paper: rgba(255,255,255,0.68);
-      --paper-strong: #fdfaf4;
-      --ink: #1f294d;
-      --muted: rgba(31,41,77,0.76);
-      --line: rgba(31,41,77,0.12);
-      --accent: #d84343;
-      --accent-soft: rgba(216, 67, 67, 0.12);
-      --shadow: 0 20px 48px rgba(30, 41, 93, 0.14);
-      --radius: 28px;
+      --bg-1: #f9f1eb;
+      --bg-2: #f1e1d9;
+      --paper: rgba(255, 251, 247, 0.82);
+      --paper-strong: #fffaf5;
+      --ink: #382b2d;
+      --muted: rgba(56, 43, 45, 0.68);
+      --line: rgba(94, 66, 68, 0.18);
+      --rose: #d98a8a;
+      --rose-deep: #b85f67;
+      --rose-soft: rgba(217, 138, 138, 0.16);
+      --gold: #c79267;
+      --shadow: 0 20px 42px rgba(87, 55, 58, 0.18);
+      --radius: 30px;
     }
 
     * { box-sizing: border-box; }
@@ -32,35 +35,34 @@
       margin: 0;
       overflow: hidden;
       background:
-        radial-gradient(circle at top, rgba(255,255,255,0.9), rgba(255,255,255,0) 30%),
-        linear-gradient(180deg, #f7f3ec 0%, #efe7dd 100%);
+        radial-gradient(circle at top, rgba(255,255,255,0.92), rgba(255,255,255,0) 35%),
+        linear-gradient(180deg, var(--bg-1), var(--bg-2));
       color: var(--ink);
-      font-family: 'Bad Script', cursive;
+      font-family: 'Cormorant Garamond', serif;
       -webkit-user-select: none;
       user-select: none;
     }
 
     body {
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       padding: 18px;
     }
 
     .app {
       width: min(100%, 430px);
       height: min(100vh, 900px);
-      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 16px;
+      position: relative;
     }
 
     .shell {
-      width: 100%;
-      max-width: 420px;
+      width: min(100%, 420px);
       height: min(78vh, 760px);
       position: relative;
       display: flex;
@@ -75,7 +77,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      perspective: 1200px;
+      perspective: 1400px;
     }
 
     .card {
@@ -83,22 +85,41 @@
       width: 100%;
       height: 100%;
       max-height: 760px;
-      background: rgba(253, 250, 244, 0.92);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.36), rgba(255,255,255,0.2)),
+        var(--paper);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      transition: transform 0.45s cubic-bezier(.22,.8,.2,1), opacity 0.35s ease, filter 0.35s ease;
+      backdrop-filter: blur(8px);
       overflow: hidden;
+      transition: transform 0.45s cubic-bezier(.22,.8,.2,1), opacity 0.32s ease, filter 0.35s ease;
       touch-action: pan-y;
     }
 
     .card::before {
       content: "";
       position: absolute;
-      inset: 12px;
-      border-radius: 22px;
-      border: 1px solid rgba(31, 41, 77, 0.08);
+      inset: 10px;
+      border-radius: 24px;
+      border: 1px solid rgba(94, 66, 68, 0.1);
+      pointer-events: none;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(217,138,138,0.08), transparent 18%),
+        radial-gradient(circle at 88% 22%, rgba(199,146,103,0.08), transparent 18%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(70, 47, 50, 0.015),
+          rgba(70, 47, 50, 0.015) 1px,
+          transparent 1px,
+          transparent 5px
+        );
       pointer-events: none;
     }
 
@@ -108,7 +129,8 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      padding: 18px 18px 16px 18px;
+      padding: 18px 18px 16px;
+      z-index: 1;
     }
 
     .lang-row {
@@ -122,53 +144,67 @@
 
     .fb {
       position: relative;
-      width: 34px;
-      height: 26px;
-      border: 1px solid rgba(31, 41, 77, 0.16);
-      background: rgba(255,255,255,0.64);
-      border-radius: 8px;
+      width: 36px;
+      height: 28px;
+      border-radius: 12px;
+      border: 1px solid rgba(94, 66, 68, 0.18);
+      background: rgba(255,255,255,0.52);
+      box-shadow: 0 8px 16px rgba(87, 55, 58, 0.06);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 17px;
       cursor: pointer;
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 6px 14px rgba(31,41,77,0.08);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    .fb:hover { transform: translateY(-1px); }
+    .fb:hover {
+      transform: translateY(-1px);
+    }
+
     .fb.on {
-      border-color: rgba(31, 41, 77, 0.4);
-      box-shadow: 0 8px 18px rgba(31,41,77,0.12);
-      background: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.88);
+      border-color: rgba(184, 95, 103, 0.5);
+      box-shadow: 0 10px 18px rgba(184, 95, 103, 0.12);
     }
 
     .fb .ck {
       display: none;
       position: absolute;
-      right: -4px;
+      right: -5px;
       top: -7px;
       font-size: 12px;
+      line-height: 1;
       font-weight: 700;
-      color: var(--ink);
+      color: var(--rose-deep);
       font-family: 'Inter', sans-serif;
     }
 
     .fb.on .ck { display: block; }
 
     .top {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 120px;
-      margin-top: 32px;
-      position: relative;
+      height: 130px;
+      margin-top: 30px;
+    }
+
+    .floral {
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      opacity: 0.9;
+      pointer-events: none;
     }
 
     .cat {
-      width: 110px;
-      height: 110px;
-      filter: drop-shadow(0 10px 14px rgba(216, 67, 67, 0.16));
+      width: 118px;
+      height: 118px;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 12px 18px rgba(184, 95, 103, 0.14));
     }
 
     .question-wrap {
@@ -176,25 +212,39 @@
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding: 8px 18px 16px 18px;
       text-align: center;
+      padding: 8px 18px 16px;
       overflow: hidden;
     }
 
     .qt {
+      width: 100%;
+      max-width: 300px;
+      min-height: 170px;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      max-width: 280px;
-      min-height: 180px;
-      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-family: 'Bad Script', cursive;
+      font-size: clamp(1.7rem, 3vw, 2.25rem);
       line-height: 1.35;
-      letter-spacing: 0.02em;
       color: var(--ink);
-      text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+      letter-spacing: 0.04em;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.2);
       word-wrap: break-word;
       overflow-wrap: anywhere;
+    }
+
+    .counter {
+      position: absolute;
+      left: 20px;
+      bottom: 24px;
+      z-index: 12;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.19em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.8;
     }
 
     .footer {
@@ -202,87 +252,80 @@
       left: 0;
       right: 0;
       bottom: 18px;
-      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 4px;
+      gap: 5px;
       padding: 0 18px;
     }
 
     .heart-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       width: 34px;
       height: 34px;
       border-radius: 50%;
-      background: var(--accent-soft);
-      border: 1px solid rgba(216, 67, 67, 0.16);
+      background: rgba(217, 138, 138, 0.12);
+      border: 1px solid rgba(184, 95, 103, 0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
     }
 
     .heart {
-      width: 20px;
-      height: 18px;
-      transform: rotate(-12deg);
+      width: 18px;
+      height: 16px;
+      transform: rotate(-10deg);
     }
 
     .prod {
-      font-size: 0.85rem;
-      opacity: 0.8;
-      color: var(--ink);
       font-family: 'Bad Script', cursive;
-      letter-spacing: 0.05em;
-    }
-
-    .counter {
-      position: absolute;
-      left: 20px;
-      bottom: 22px;
-      z-index: 12;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      opacity: 0.75;
+      font-size: 0.83rem;
+      color: var(--ink);
+      opacity: 0.8;
+      letter-spacing: 0.04em;
     }
 
     .controls {
+      width: min(100%, 420px);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 14px;
-      width: 100%;
-      max-width: 420px;
     }
 
     .nav {
       width: 48px;
       height: 48px;
-      border: 1px solid rgba(31,41,77,0.14);
+      border: 1px solid rgba(94, 66, 68, 0.18);
       border-radius: 50%;
-      background: rgba(255,255,255,0.62);
+      background: rgba(255,255,255,0.56);
+      box-shadow: 0 10px 20px rgba(87, 55, 58, 0.08);
       color: var(--ink);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.35rem;
       cursor: pointer;
-      box-shadow: 0 10px 20px rgba(31,41,77,0.08);
-      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
     }
 
-    .nav:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(31,41,77,0.12); }
-    .nav.hidden { opacity: 0; pointer-events: none; }
+    .nav:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(87, 55, 58, 0.12);
+    }
+
+    .nav.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
 
     .hint {
       min-width: 120px;
       text-align: center;
-      color: rgba(31,41,77,0.6);
-      font: 500 0.82rem 'Inter', sans-serif;
-      letter-spacing: 0.08em;
+      color: rgba(56, 43, 45, 0.65);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
     }
 
@@ -291,9 +334,8 @@
       .shell { max-height: 72vh; }
       .card-inner { padding-left: 14px; padding-right: 14px; }
       .lang-row { right: 14px; top: 14px; }
-      .counter { left: 16px; bottom: 18px; }
+      .counter { left: 16px; bottom: 20px; }
       .question-wrap { padding-left: 12px; padding-right: 12px; }
-      .prod { font-size: 0.8rem; }
     }
   </style>
 </head>
@@ -313,6 +355,7 @@
   <script>
     const storageKey = 'questions_v2_lang';
     const progressKey = 'questions_v2_index';
+
     const defaultQuestions = {
       ru: [
         'Ты не обязан все объяснять, если тебя понимают без слов.',
@@ -354,8 +397,8 @@
 
     const lang = localStorage.getItem(storageKey) || 'ru';
     const slider = document.getElementById('slider');
-    const nextBtn = document.getElementById('nextBtn');
     const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
 
     let questions = defaultQuestions[lang] || defaultQuestions.ru;
     let idx = Number(localStorage.getItem(progressKey + '_' + lang) || 0);
@@ -364,22 +407,24 @@
     let startX = 0;
     let currentX = 0;
 
-    const catSVG = '<svg class="cat" viewBox="0 0 110 120" fill="none" stroke="#d32f2f" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M 42 62 L 18 22"/><ellipse cx="54" cy="69" rx="18" ry="18"/><path d="M 45 87 L 44 103"/><path d="M 51 87 L 54 103"/><path d="M 62 87 L 63 103"/><path d="M 68 85 L 72 103"/><ellipse cx="62" cy="42" rx="11" ry="10"/><path d="M 52 39 L 50 27 L 59 33"/><path d="M 64 33 L 73 29 L 70 40"/><circle cx="57" cy="41" r="1.5" fill="#d32f2f"/><circle cx="67" cy="41" r="1.5" fill="#d32f2f"/><circle cx="62" cy="45" r="3" fill="#d32f2f" stroke="none"/><path d="M 58 48 Q 62 53 66 48" stroke-width="1.8"/><path d="M 53 41 L 42 38"/><path d="M 54 44 L 44 44"/><path d="M 58 47 L 53 51"/><path d="M 68 41 L 79 42"/><path d="M 69 44 L 82 49"/><path d="M 68 48 L 78 53"/></svg>';
+    const floralSVG = '<svg class="floral" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke="#b85f67" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"><path d="M60 12C60 32 48 42 39 53C30 64 27 78 36 88C44 97 58 98 60 110"/><path d="M60 12C60 32 72 42 81 53C90 64 93 78 84 88C76 97 62 98 60 110"/><path d="M25 60C42 52 49 41 54 28"/><path d="M95 60C78 52 71 41 66 28"/><path d="M60 27C60 43 52 52 44 60C35 69 34 83 45 92"/><path d="M60 27C60 43 68 52 76 60C85 69 86 83 75 92"/><circle cx="60" cy="62" r="7" fill="rgba(184,95,103,0.15)" stroke="none"/></g></svg>';
 
-    const heartSVG = '<svg class="heart" viewBox="0 0 100 90"><defs><pattern id="s" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(22)"><line x1="0" y1="0" x2="0" y2="6" stroke="#d32f2f" stroke-width="1.9" opacity="0.85"/><line x1="3" y1="0" x2="3" y2="6" stroke="#e04b4b" stroke-width="1.1" opacity="0.55"/></pattern></defs><path d="M 46 86 C 14 62, 2 44, 8 26 C 12 12, 26 4, 39 12 C 45 16, 47 24, 48 30 C 51 22, 57 14, 67 13 C 82 12, 94 22, 93 36 C 91 53, 74 66, 46 86 Z" fill="url(#s)"/><path d="M 46 86 C 14 62, 2 44, 8 26 C 12 12, 26 4, 39 12 C 45 16, 47 24, 48 30 C 51 22, 57 14, 67 13 C 82 12, 94 22, 93 36 C 91 53, 74 66, 46 86 Z" fill="none" stroke="#b71c1c" stroke-width="2.7" stroke-linecap="round"/></svg>';
+    const catSVG = '<svg class="cat" viewBox="0 0 110 120" fill="none" stroke="#b85f67" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M 42 62 L 18 22"/><ellipse cx="54" cy="69" rx="18" ry="18"/><path d="M 45 87 L 44 103"/><path d="M 51 87 L 54 103"/><path d="M 62 87 L 63 103"/><path d="M 68 85 L 72 103"/><ellipse cx="62" cy="42" rx="11" ry="10"/><path d="M 52 39 L 50 27 L 59 33"/><path d="M 64 33 L 73 29 L 70 40"/><circle cx="57" cy="41" r="1.5" fill="#b85f67"/><circle cx="67" cy="41" r="1.5" fill="#b85f67"/><circle cx="62" cy="45" r="3" fill="#b85f67" stroke="none"/><path d="M 58 48 Q 62 53 66 48" stroke-width="1.8"/><path d="M 53 41 L 42 38"/><path d="M 54 44 L 44 44"/><path d="M 58 47 L 53 51"/><path d="M 68 41 L 79 42"/><path d="M 69 44 L 82 49"/><path d="M 68 48 L 78 53"/></svg>';
+
+    const heartSVG = '<svg class="heart" viewBox="0 0 100 90"><defs><pattern id="s" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(22)"><line x1="0" y1="0" x2="0" y2="6" stroke="#b85f67" stroke-width="1.8" opacity="0.9"/><line x1="3" y1="0" x2="3" y2="6" stroke="#d98a8a" stroke-width="1.1" opacity="0.6"/></pattern></defs><path d="M 46 86 C 14 62, 2 44, 8 26 C 12 12, 26 4, 39 12 C 45 16, 47 24, 48 30 C 51 22, 57 14, 67 13 C 82 12, 94 22, 93 36 C 91 53, 74 66, 46 86 Z" fill="url(#s)"/><path d="M 46 86 C 14 62, 2 44, 8 26 C 12 12, 26 4, 39 12 C 45 16, 47 24, 48 30 C 51 22, 57 14, 67 13 C 82 12, 94 22, 93 36 C 91 53, 74 66, 46 86 Z" fill="none" stroke="#9b4a5a" stroke-width="2.7" stroke-linecap="round"/></svg>';
 
     const flagsHTML = '<div class="lang-row"><button class="fb" data-l="ru">🇷🇺<span class="ck">✓</span></button><button class="fb" data-l="en">🇬🇧<span class="ck">✓</span></button><button class="fb" data-l="de">🇩🇪<span class="ck">✓</span></button><button class="fb" data-l="es">🇪🇸<span class="ck">✓</span></button></div>';
-
-    function setActiveFlags() {
-      const buttons = document.querySelectorAll('.fb');
-      buttons.forEach(btn => {
-        btn.classList.toggle('on', btn.getAttribute('data-l') === lang);
-      });
-    }
 
     function saveProgress() {
       localStorage.setItem(storageKey, lang);
       localStorage.setItem(progressKey + '_' + lang, String(idx));
+    }
+
+    function setActiveFlags() {
+      const buttons = document.querySelectorAll('.fb');
+      buttons.forEach((button) => {
+        button.classList.toggle('on', button.getAttribute('data-l') === lang);
+      });
     }
 
     function buildCards() {
@@ -393,7 +438,10 @@
         card.innerHTML = `
           ${flagsHTML}
           <div class="card-inner">
-            <div class="top">${catSVG}</div>
+            <div class="top">
+              ${floralSVG}
+              ${catSVG}
+            </div>
             <div class="question-wrap">
               <div class="qt">${q}</div>
             </div>
@@ -487,9 +535,9 @@
     }
 
     document.addEventListener('click', (event) => {
-      const btn = event.target.closest('.fb');
-      if (!btn) return;
-      const nextLang = btn.getAttribute('data-l');
+      const button = event.target.closest('.fb');
+      if (!button) return;
+      const nextLang = button.getAttribute('data-l');
       if (nextLang && nextLang !== lang) {
         loadLanguage(nextLang);
       }
