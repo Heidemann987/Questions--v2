@@ -1,71 +1,516 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>produced by Eugen Kisler</title>
-<meta name="theme-color" content="#fdfcf7">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Вопросы">
-<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%23fdfcf7'/%3E%3Cg transform='translate(46,40) scale(1.05)' fill='none' stroke='%23d32f2f' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M 37 57 L 15 20'/%3E%3Cellipse cx='50' cy='65' rx='16' ry='17'/%3E%3Cpath d='M 43 82 L 42 96'/%3E%3Cpath d='M 48 82 L 50 96'/%3E%3Cpath d='M 57 82 L 57 98'/%3E%3Cpath d='M 62 80 L 65 96'/%3E%3Cellipse cx='58' cy='38' rx='10' ry='9'/%3E%3Cpath d='M 49 33 L 48 24 L 56 30'/%3E%3Cpath d='M 60 30 L 68 26 L 66 35'/%3E%3C/g%3E%3C/svg%3E">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Bad+Script&display=swap');
-:root{color-scheme:light only}
-*{box-sizing:border-box;margin:0;padding:0;user-select:none;-webkit-user-select:none}
-html,body{width:100%;height:100%;overflow:hidden;background:#fff!important;color:#1e295d!important;font-family:'Bad Script',cursive,sans-serif}
-body{display:flex;justify-content:center;align-items:center}
-.app{width:100%;max-width:420px;height:100%;max-height:900px;position:relative;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:10px 0}
-.slider{width:90%;aspect-ratio:3/4;max-height:78vh;position:relative;margin-bottom:14px}
-.card{position:absolute;width:100%;height:100%;background:#fdfcf7;border-radius:4px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:10px;transition:transform .4s,opacity .4s;touch-action:pan-y;border:1px solid #c8c8c8;overflow:hidden}
-.flag{position:absolute;bottom:50px;left:34px;z-index:10;display:flex;gap:5px}
-.fb{background:rgba(255,255,255,.9);border:1px solid rgba(30,41,93,.2);border-radius:5px;width:32px;height:24px;font-size:15px;cursor:pointer;display:flex;justify-content:center;align-items:center;opacity:.4;padding:0;line-height:1;position:relative}
-.fb.on{opacity:1;border-color:#1e295d}
-.fb .ck{display:none;position:absolute;top:-6px;right:-4px;font-size:12px;color:#1e295d;font-weight:bold}
-.fb.on .ck{display:block}
-.counter{position:absolute;bottom:18px;left:34px;font-size:12px;color:#1e295d;font-family:sans-serif;opacity:.7;z-index:5}
-.top{display:flex;justify-content:center;align-items:center;height:115px;padding-left:26px;padding-right:10px}
-.cat{width:95px;height:95px}
-.qc{display:flex;justify-content:center;align-items:flex-start;text-align:center;padding:0 10px 100px 26px;height:calc(100% - 115px)}
-.qt{font-family:'Bad Script',cursive!important;font-size:1.3rem;line-height:1.4;color:#1e295d;font-weight:400!important;word-wrap:break-word}
-.footer{position:absolute;bottom:12px;left:0;width:100%;display:flex;flex-direction:column;align-items:center;padding:0 10px 0 26px}
-.heart{width:24px;height:22px;margin-bottom:2px;transform:rotate(-10deg)}
-.prod{font-size:.8rem;color:#1e295d;font-family:'Bad Script',cursive;opacity:.75}
-.controls{display:flex;gap:12px;align-items:center;justify-content:center;padding:0 10px}
-.nav{background:rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.25);color:#1a1a24;width:44px;height:44px;border-radius:50%;font-size:1.2rem;cursor:pointer;display:flex;justify-content:center;align-items:center}
-.nav.hidden{display:none}
-.hint{color:rgba(0,0,0,.55);font-size:.75rem;font-family:sans-serif}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Вопросы</title>
+  <meta name="theme-color" content="#f4efe8" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Вопросы" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg: #f5efe7;
+      --paper: rgba(255,255,255,0.68);
+      --paper-strong: #fdfaf4;
+      --ink: #1f294d;
+      --muted: rgba(31,41,77,0.76);
+      --line: rgba(31,41,77,0.12);
+      --accent: #d84343;
+      --accent-soft: rgba(216, 67, 67, 0.12);
+      --shadow: 0 20px 48px rgba(30, 41, 93, 0.14);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.9), rgba(255,255,255,0) 30%),
+        linear-gradient(180deg, #f7f3ec 0%, #efe7dd 100%);
+      color: var(--ink);
+      font-family: 'Bad Script', cursive;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 18px;
+    }
+
+    .app {
+      width: min(100%, 430px);
+      height: min(100vh, 900px);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 420px;
+      height: min(78vh, 760px);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+    }
+
+    .card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      max-height: 760px;
+      background: rgba(253, 250, 244, 0.92);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      transition: transform 0.45s cubic-bezier(.22,.8,.2,1), opacity 0.35s ease, filter 0.35s ease;
+      overflow: hidden;
+      touch-action: pan-y;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 22px;
+      border: 1px solid rgba(31, 41, 77, 0.08);
+      pointer-events: none;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 18px 18px 16px 18px;
+    }
+
+    .lang-row {
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      display: flex;
+      gap: 8px;
+      z-index: 20;
+    }
+
+    .fb {
+      position: relative;
+      width: 34px;
+      height: 26px;
+      border: 1px solid rgba(31, 41, 77, 0.16);
+      background: rgba(255,255,255,0.64);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 6px 14px rgba(31,41,77,0.08);
+    }
+
+    .fb:hover { transform: translateY(-1px); }
+    .fb.on {
+      border-color: rgba(31, 41, 77, 0.4);
+      box-shadow: 0 8px 18px rgba(31,41,77,0.12);
+      background: rgba(255,255,255,0.9);
+    }
+
+    .fb .ck {
+      display: none;
+      position: absolute;
+      right: -4px;
+      top: -7px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .fb.on .ck { display: block; }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 120px;
+      margin-top: 32px;
+      position: relative;
+    }
+
+    .cat {
+      width: 110px;
+      height: 110px;
+      filter: drop-shadow(0 10px 14px rgba(216, 67, 67, 0.16));
+    }
+
+    .question-wrap {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 8px 18px 16px 18px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .qt {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 280px;
+      min-height: 180px;
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      line-height: 1.35;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .footer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 18px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 0 18px;
+    }
+
+    .heart-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      border: 1px solid rgba(216, 67, 67, 0.16);
+    }
+
+    .heart {
+      width: 20px;
+      height: 18px;
+      transform: rotate(-12deg);
+    }
+
+    .prod {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      color: var(--ink);
+      font-family: 'Bad Script', cursive;
+      letter-spacing: 0.05em;
+    }
+
+    .counter {
+      position: absolute;
+      left: 20px;
+      bottom: 22px;
+      z-index: 12;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.75;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .nav {
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(31,41,77,0.14);
+      border-radius: 50%;
+      background: rgba(255,255,255,0.62);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(31,41,77,0.08);
+      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .nav:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(31,41,77,0.12); }
+    .nav.hidden { opacity: 0; pointer-events: none; }
+
+    .hint {
+      min-width: 120px;
+      text-align: center;
+      color: rgba(31,41,77,0.6);
+      font: 500 0.82rem 'Inter', sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 420px) {
+      body { padding: 10px; }
+      .shell { max-height: 72vh; }
+      .card-inner { padding-left: 14px; padding-right: 14px; }
+      .lang-row { right: 14px; top: 14px; }
+      .counter { left: 16px; bottom: 18px; }
+      .question-wrap { padding-left: 12px; padding-right: 12px; }
+      .prod { font-size: 0.8rem; }
+    }
+  </style>
 </head>
 <body>
-<div class="app">
-<div class="slider" id="slider"></div>
-<div class="controls">
-<button class="nav hidden" id="prevBtn">❮</button>
-<span class="hint">Свайпайте</span>
-<button class="nav" id="nextBtn">❯</button>
-</div>
-</div>
-<script>
-var lang=localStorage.getItem('lang')||'ru',questions=[],idx=parseInt(localStorage.getItem('idx_'+lang)||'0'),cards=[],slider=document.getElementById('slider');
-var catSVG='<svg class="cat" viewBox="0 0 100 110" fill="none" stroke="#d32f2f" stroke-width="2.6" stroke-linecap="round"><path d="M 37 57 L 15 20"/><ellipse cx="50" cy="65" rx="16" ry="17"/><path d="M 43 82 L 42 96"/><path d="M 48 82 L 50 96"/><path d="M 57 82 L 57 98"/><path d="M 62 80 L 65 96"/><ellipse cx="58" cy="38" rx="10" ry="9"/><path d="M 49 33 L 48 24 L 56 30"/><path d="M 60 30 L 68 26 L 66 35"/><circle cx="53" cy="36" r="1.2" fill="#d32f2f"/><circle cx="62" cy="36" r="1.2" fill="#d32f2f"/><circle cx="58" cy="39" r="2.5" fill="#d32f2f" stroke="none"/><path d="M 54 43 Q 56 46 58 43 Q 60 46 62 43" stroke-width="1.8"/><path d="M 50 36 L 40 33"/><path d="M 50 39 L 42 39"/><path d="M 50 42 L 47 45"/><path d="M 64 36 L 73 37"/><path d="M 64 39 L 75 42"/><path d="M 64 42 L 72 46"/></svg>';
-var heartSVG='<svg class="heart" viewBox="0 0 100 90"><defs><pattern id="s" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(22)"><line x1="0" y1="0" x2="0" y2="6" stroke="#d32f2f" stroke-width="1.9" opacity="0.85"/><line x1="3" y1="0" x2="3" y2="6" stroke="#e04b4b" stroke-width="1.1" opacity="0.55"/></pattern></defs><path d="M 46 86 C 14 62, 2 44, 8 26 C 12 12, 26 4, 39 12 C 45 16, 47 24, 48 30 C 51 22, 57 14, 67 13 C 82 12, 94 22, 93 36 C 91 53, 74 66, 46 86 Z" fill="url(#s)"/><path d="M 46 86 C 14 62, 2 44, 8 26 C 12 12, 26 4, 39 12 C 45 16, 47 24, 48 30 C 51 22, 57 14, 67 13 C 82 12, 94 22, 93 36 C 91 53, 74 66, 46 86 Z" fill="none" stroke="#b71c1c" stroke-width="2.7" stroke-linecap="round"/></svg>';
-var flagsHTML='<div class="flag"><button class="fb" data-l="ru">🇷🇺<span class="ck">✓</span></button><button class="fb" data-l="en">🇬🇧<span class="ck">✓</span></button><button class="fb" data-l="de">🇩🇪<span class="ck">✓</span></button><button class="fb" data-l="es">🇪🇸<span class="ck">✓</span></button></div>';
-function setActive(){var bs=document.querySelectorAll('.fb');for(var i=0;i<bs.length;i++){if(bs[i].getAttribute('data-l')===lang)bs[i].classList.add('on');else bs[i].classList.remove('on');}}
-function build(){slider.innerHTML='';cards=[];for(var i=0;i<questions.length;i++){var c=document.createElement('div');c.className='card';c.style.zIndex=questions.length-i;c.innerHTML=flagsHTML+'<div class="top">'+catSVG+'</div><div class="qc"><div class="qt">'+questions[i]+'</div></div><div class="counter">'+(i+1)+' / '+questions.length+'</div><div class="footer">'+heartSVG+'<div class="prod">produced by Eugen Kisler</div></div>';slider.appendChild(c);cards.push(c);}setActive();update();}
-function update(){for(var i=0;i<cards.length;i++){var c=cards[i];if(i<idx){c.style.transform='translateX(-120%) rotate(-8deg)';c.style.opacity='0';c.style.pointerEvents='none';}else if(i===idx){c.style.transform='translateX(0) rotate(0) scale(1)';c.style.opacity='1';c.style.pointerEvents='auto';}else{var o=i-idx;c.style.transform='translateY('+(o*6)+'px) scale('+(1-o*.03)+')';c.style.opacity=o>2?'0':'1';c.style.pointerEvents='none';}}var pb=document.getElementById('prevBtn');if(idx>0){pb.classList.remove('hidden');}else{pb.classList.add('hidden');}localStorage.setItem('idx_'+lang,idx);}
-function loadLang(l){fetch(l+'.json').then(function(r){return r.json();}).then(function(data){questions=data;lang=l;localStorage.setItem('lang',l);idx=parseInt(localStorage.getItem('idx_'+l)||'0');build();});}
-var sx=0,cx=0,drag=false;
-function hs(e){drag=true;sx=e.type.indexOf('touch')!==-1?e.touches[0].clientX:e.clientX;}
-function hm(e){if(!drag)return;cx=e.type.indexOf('touch')!==-1?e.touches[0].clientX:e.clientX;var d=cx-sx;if(idx<cards.length){cards[idx].style.transform='translateX('+d+'px) rotate('+(d*.04)+'deg)';}}
-function he(){if(!drag)return;drag=false;var d=cx-sx;if(Math.abs(d)>50){if(d<0&&idx<cards.length-1)idx++;else if(d>0&&idx>0)idx--;}update();}
-document.addEventListener('click',function(e){var b=e.target.closest('.fb');if(b){var l=b.getAttribute('data-l');if(l!==lang)loadLang(l);}});
-slider.addEventListener('touchstart',hs);slider.addEventListener('touchmove',hm);slider.addEventListener('touchend',he);
-slider.addEventListener('mousedown',hs);window.addEventListener('mousemove',hm);window.addEventListener('mouseup',he);
-document.getElementById('nextBtn').addEventListener('click',function(){if(idx<cards.length-1){idx++;update();}});
-document.getElementById('prevBtn').addEventListener('click',function(){if(idx>0){idx--;update();}});
-window.addEventListener('keydown',function(e){if(e.key==='ArrowRight'&&idx<cards.length-1){idx++;update();}else if(e.key==='ArrowLeft'&&idx>0){idx--;update();}});
-loadLang(lang);
-</script>
+  <div class="app">
+    <div class="shell">
+      <div class="slider" id="slider"></div>
+    </div>
+
+    <div class="controls">
+      <button class="nav hidden" id="prevBtn" aria-label="Previous">❮</button>
+      <span class="hint">Свайпайте</span>
+      <button class="nav" id="nextBtn" aria-label="Next">❯</button>
+    </div>
+  </div>
+
+  <script>
+    const storageKey = 'questions_v2_lang';
+    const progressKey = 'questions_v2_index';
+    const defaultQuestions = {
+      ru: [
+        'Ты не обязан все объяснять, если тебя понимают без слов.',
+        'Самое важное — не быть идеальным, а быть настоящим.',
+        'Иногда тишина — это самый честный ответ.',
+        'Жизнь не всегда меняется быстро, иногда она просто становится мягче.',
+        'Не бойся сделать первый шаг — даже маленький путь ведёт далеко.',
+        'Есть люди, которые делают тебя лучше просто своим присутствием.',
+        'Можно не знать ответа, но всё равно идти в правильную сторону.'
+      ],
+      en: [
+        'You do not have to explain everything to be understood.',
+        'What matters most is not perfection, but sincerity.',
+        'Sometimes silence is the truest answer.',
+        'Life often changes not in a rush, but in a gentle unfolding.',
+        'Do not fear the first step — even a small path leads far.',
+        'Some people make you better just by being near.',
+        'You may not know the answer yet, but you can still move in the right direction.'
+      ],
+      de: [
+        'Du musst nichts erklären, wenn dich auch ohne Worte jemand versteht.',
+        'Wichtig ist nicht Perfektion, sondern Ehrlichkeit.',
+        'Manchmal ist Schweigen die ehrlichste Antwort.',
+        'Das Leben verändert sich oft nicht mit einem Schlag, sondern sanft.',
+        'Hab keine Angst vor dem ersten Schritt — auch ein kleiner Weg führt weit.',
+        'Manche Menschen machen dich besser, nur indem sie da sind.',
+        'Du musst die Antwort noch nicht kennen, um trotzdem den richtigen Weg zu gehen.'
+      ],
+      es: [
+        'No tienes que explicar todo para que te entiendan.',
+        'Lo más importante no es ser perfecto, sino ser auténtico.',
+        'A veces el silencio es la respuesta más honesta.',
+        'La vida suele cambiar no de golpe, sino con suavidad.',
+        'No temas dar el primer paso: incluso un camino pequeño lleva lejos.',
+        'Hay personas que te hacen mejor solo por estar cerca.',
+        'Puede que aún no sepas la respuesta, pero aun así puedes ir por el buen camino.'
+      ]
+    };
+
+    const lang = localStorage.getItem(storageKey) || 'ru';
+    const slider = document.getElementById('slider');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+
+    let questions = defaultQuestions[lang] || defaultQuestions.ru;
+    let idx = Number(localStorage.getItem(progressKey + '_' + lang) || 0);
+    let cards = [];
+    let drag = false;
+    let startX = 0;
+    let currentX = 0;
+
+    const catSVG = '<svg class="cat" viewBox="0 0 110 120" fill="none" stroke="#d32f2f" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M 42 62 L 18 22"/><ellipse cx="54" cy="69" rx="18" ry="18"/><path d="M 45 87 L 44 103"/><path d="M 51 87 L 54 103"/><path d="M 62 87 L 63 103"/><path d="M 68 85 L 72 103"/><ellipse cx="62" cy="42" rx="11" ry="10"/><path d="M 52 39 L 50 27 L 59 33"/><path d="M 64 33 L 73 29 L 70 40"/><circle cx="57" cy="41" r="1.5" fill="#d32f2f"/><circle cx="67" cy="41" r="1.5" fill="#d32f2f"/><circle cx="62" cy="45" r="3" fill="#d32f2f" stroke="none"/><path d="M 58 48 Q 62 53 66 48" stroke-width="1.8"/><path d="M 53 41 L 42 38"/><path d="M 54 44 L 44 44"/><path d="M 58 47 L 53 51"/><path d="M 68 41 L 79 42"/><path d="M 69 44 L 82 49"/><path d="M 68 48 L 78 53"/></svg>';
+
+    const heartSVG = '<svg class="heart" viewBox="0 0 100 90"><defs><pattern id="s" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(22)"><line x1="0" y1="0" x2="0" y2="6" stroke="#d32f2f" stroke-width="1.9" opacity="0.85"/><line x1="3" y1="0" x2="3" y2="6" stroke="#e04b4b" stroke-width="1.1" opacity="0.55"/></pattern></defs><path d="M 46 86 C 14 62, 2 44, 8 26 C 12 12, 26 4, 39 12 C 45 16, 47 24, 48 30 C 51 22, 57 14, 67 13 C 82 12, 94 22, 93 36 C 91 53, 74 66, 46 86 Z" fill="url(#s)"/><path d="M 46 86 C 14 62, 2 44, 8 26 C 12 12, 26 4, 39 12 C 45 16, 47 24, 48 30 C 51 22, 57 14, 67 13 C 82 12, 94 22, 93 36 C 91 53, 74 66, 46 86 Z" fill="none" stroke="#b71c1c" stroke-width="2.7" stroke-linecap="round"/></svg>';
+
+    const flagsHTML = '<div class="lang-row"><button class="fb" data-l="ru">🇷🇺<span class="ck">✓</span></button><button class="fb" data-l="en">🇬🇧<span class="ck">✓</span></button><button class="fb" data-l="de">🇩🇪<span class="ck">✓</span></button><button class="fb" data-l="es">🇪🇸<span class="ck">✓</span></button></div>';
+
+    function setActiveFlags() {
+      const buttons = document.querySelectorAll('.fb');
+      buttons.forEach(btn => {
+        btn.classList.toggle('on', btn.getAttribute('data-l') === lang);
+      });
+    }
+
+    function saveProgress() {
+      localStorage.setItem(storageKey, lang);
+      localStorage.setItem(progressKey + '_' + lang, String(idx));
+    }
+
+    function buildCards() {
+      slider.innerHTML = '';
+      cards = [];
+
+      questions.forEach((q, i) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.zIndex = String(questions.length - i);
+        card.innerHTML = `
+          ${flagsHTML}
+          <div class="card-inner">
+            <div class="top">${catSVG}</div>
+            <div class="question-wrap">
+              <div class="qt">${q}</div>
+            </div>
+            <div class="counter">${i + 1} / ${questions.length}</div>
+            <div class="footer">
+              <div class="heart-wrap">${heartSVG}</div>
+              <div class="prod">produced by Eugen Kisler</div>
+            </div>
+          </div>
+        `;
+        slider.appendChild(card);
+        cards.push(card);
+      });
+
+      setActiveFlags();
+      updateCards();
+    }
+
+    function updateCards() {
+      cards.forEach((card, i) => {
+        if (i < idx) {
+          card.style.transform = 'translateX(-120%) rotate(-9deg) scale(0.94)';
+          card.style.opacity = '0';
+          card.style.filter = 'blur(2px)';
+          card.style.pointerEvents = 'none';
+        } else if (i === idx) {
+          card.style.transform = 'translateX(0) rotate(0deg) scale(1)';
+          card.style.opacity = '1';
+          card.style.filter = 'blur(0)';
+          card.style.pointerEvents = 'auto';
+        } else {
+          const offset = i - idx;
+          card.style.transform = `translateY(${offset * 8}px) scale(${1 - offset * 0.04})`;
+          card.style.opacity = offset > 2 ? '0' : '1';
+          card.style.filter = offset > 2 ? 'blur(2px)' : 'blur(0)';
+          card.style.pointerEvents = 'none';
+        }
+      });
+
+      prevBtn.classList.toggle('hidden', idx <= 0);
+      saveProgress();
+    }
+
+    function loadLanguage(nextLang) {
+      const nextQuestions = defaultQuestions[nextLang] || defaultQuestions.ru;
+      questions = nextQuestions;
+      idx = Number(localStorage.getItem(progressKey + '_' + nextLang) || 0);
+      if (idx >= questions.length) idx = 0;
+      localStorage.setItem(storageKey, nextLang);
+      buildCards();
+    }
+
+    function nextCard() {
+      if (idx < questions.length - 1) {
+        idx += 1;
+        updateCards();
+      }
+    }
+
+    function prevCard() {
+      if (idx > 0) {
+        idx -= 1;
+        updateCards();
+      }
+    }
+
+    function onDragStart(event) {
+      drag = true;
+      startX = event.type.indexOf('touch') !== -1 ? event.touches[0].clientX : event.clientX;
+      currentX = startX;
+    }
+
+    function onDragMove(event) {
+      if (!drag || !cards[idx]) return;
+      currentX = event.type.indexOf('touch') !== -1 ? event.touches[0].clientX : event.clientX;
+      const delta = currentX - startX;
+      cards[idx].style.transform = `translateX(${delta}px) rotate(${delta * 0.04}deg)`;
+    }
+
+    function onDragEnd() {
+      if (!drag) return;
+      drag = false;
+      const delta = currentX - startX;
+
+      if (Math.abs(delta) > 60) {
+        if (delta < 0) nextCard();
+        else prevCard();
+      } else {
+        updateCards();
+      }
+    }
+
+    document.addEventListener('click', (event) => {
+      const btn = event.target.closest('.fb');
+      if (!btn) return;
+      const nextLang = btn.getAttribute('data-l');
+      if (nextLang && nextLang !== lang) {
+        loadLanguage(nextLang);
+      }
+    });
+
+    nextBtn.addEventListener('click', nextCard);
+    prevBtn.addEventListener('click', prevCard);
+
+    slider.addEventListener('touchstart', onDragStart, { passive: true });
+    slider.addEventListener('touchmove', onDragMove, { passive: true });
+    slider.addEventListener('touchend', onDragEnd, { passive: true });
+    slider.addEventListener('mousedown', onDragStart);
+    window.addEventListener('mousemove', onDragMove);
+    window.addEventListener('mouseup', onDragEnd);
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight') nextCard();
+      else if (event.key === 'ArrowLeft') prevCard();
+    });
+
+    buildCards();
+  </script>
 </body>
 </html>
